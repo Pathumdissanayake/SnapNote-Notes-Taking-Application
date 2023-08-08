@@ -4,7 +4,8 @@
   "description": "Notes Taking Web Application",
   "main": "index.js",
   "scripts": {
-    "start": "node Server.js"
+    "start": "node Server.js",
+    "dev": "nodemon Server.js"
   },
   "author": "Pathum Dissanayake",
   "license": "ISC",
