@@ -1,1 +1,0 @@
-# SnapNote-Notes-Taking-Application
