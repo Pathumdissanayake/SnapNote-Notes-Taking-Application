@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -8,42 +9,41 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async(event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await axios.get(`http://localhost:4000/User/check-email/${email}`);
+      const response = await axios.get(
+        `http://localhost:4000/User/check-email/${email}`
+      );
 
-      if(response.data.exists) {
+      if (response.data.exists) {
         alert("Email already registered. Please use a different email.");
       } else {
         axios
-      .post("http://localhost:4000/User/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-      })
-      .then(() => {
-        alert("User Added!!");
-      })
-      .catch((err) => console.log(err));
+          .post("http://localhost:4000/User/register", {
+            firstName,
+            lastName,
+            email,
+            password,
+          })
+          .then(() => {
+            alert("User Added!!");
+            navigate("/");
+          })
+          .catch((err) => console.log(err));
 
-    // Reset the form after submission
-    setEmail("");
-    setFirstName("");
-    setLastName("");
-    setPassword("");
+        // Reset the form after submission
+        setEmail("");
+        setFirstName("");
+        setLastName("");
+        setPassword("");
       }
-    
     } catch (err) {
       console.log(err);
     }
-
-
-
-
-    
   };
 
   return (
