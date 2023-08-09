@@ -30,7 +30,7 @@ const Register = () => {
             password,
           })
           .then(() => {
-            alert("User Added!!");
+            alert("Registration Success!!");
             navigate("/");
           })
           .catch((err) => console.log(err));
