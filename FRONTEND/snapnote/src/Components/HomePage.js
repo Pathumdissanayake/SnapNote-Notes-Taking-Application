@@ -6,10 +6,9 @@ import "../Styles/HomePage.css";
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
 
-  //read
+  //read~notes
   useEffect(() => {
     function getNotes() {
-      //jwt token
       axios
         .get("http://localhost:4000/Notes/notes")
         .then((res) => {
@@ -24,6 +23,17 @@ export default function HomePage() {
 
   return (
     <div className="home-body">
+      <div className="header-div">
+        <div className="header-section-1">
+        <h1 className="app-name">SNAPNOTE</h1>
+        <h2 className="app-tagline"> Your Digital Note-Taking Companion</h2>
+        </div>
+        
+      </div>
+
+      <div className="header-section-2">
+        {/*user icon ekak daanna*/}
+      </div>
       <div className="div1">
         <table>
           <tbody>
@@ -44,7 +54,7 @@ export default function HomePage() {
           </tbody>
         </table>
       </div>
-      <div className="div2">{/* Additional content for div2 */}</div>
+      <div className="div2">{/* eka note ekak click kalama methnt enn oni */}</div>
       <div className="add-new-btn-div">
         <Link to="/New-note" className="add-new-notes-btn">
           <button>+</button>
