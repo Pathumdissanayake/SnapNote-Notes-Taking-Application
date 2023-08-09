@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../MODELS/UserModel.js"); // Assuming your model is defined here
 
-// Register ~ //http://localhost:4000/User/register
+// Register ~ http://localhost:4000/User/register
 router.route("/register").post((req, res) => {
   const firstname = req.body.firstName;
   const lastname = req.body.lastName;
@@ -42,5 +42,23 @@ router.get('/check-email/:email', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+//login routes ~ http://localhost:4000/User/login
+    router.route('/login').post((req,res) => {
+        const {email, password} = req.body;
+
+        User.findOne({email: email})
+        .then(user => {
+          if(user) {
+            if(user.password === password) {
+              res.json("Success!!")
+            } else {
+              res.json("The password is incorrect!!")
+            }
+          } else {
+            res.json("No record existing!!")
+          }
+        })
+    })
 
 module.exports = router;
