@@ -13,9 +13,11 @@ const Login = () => {
 
     axios.post("http://localhost:4000/User/login", { email, password })
       .then((result) => {
-        if (result.data === "Success") {
+        if (result.data.message === "Success") {
           navigate("/home");
           alert("Login Successfully!!");
+        } else if(result.data.error === "Incorrect"){
+          alert("Register first!!")
         }
       });
   };
@@ -23,7 +25,7 @@ const Login = () => {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleLoginFormSubmit}>
+      <form onSubmit={handleLoginFormSubmit}> {/* Move onSubmit to the form element */}
         <div>
           <label>Email:</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
