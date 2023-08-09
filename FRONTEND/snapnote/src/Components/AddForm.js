@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function AddForm() {
   const [title, setTitle] = useState(""); // State for title input
@@ -62,7 +63,7 @@ export default function AddForm() {
 
         <br />
         <button type="submit">Create</button>
-        <button type="button">Cancel</button>
+        <Link to="/"><button type="button" link >Cancel</button></Link>
         <br />
         <button type="button">+ Set Reminder</button>
       </form>
