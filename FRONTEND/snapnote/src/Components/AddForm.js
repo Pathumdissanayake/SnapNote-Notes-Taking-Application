@@ -63,7 +63,7 @@ export default function AddForm() {
 
         <br />
         <button type="submit">Create</button>
-        <Link to="/register"><button type="button" link >Cancel</button></Link>
+        <Link to="/home"><button type="button" link >Cancel</button></Link>
         <br />
         <button type="button">+ Set Reminder</button>
       </form>
