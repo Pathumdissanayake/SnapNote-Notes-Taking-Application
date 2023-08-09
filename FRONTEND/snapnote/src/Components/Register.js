@@ -1,37 +1,55 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
 
-    // Here, you can implement the logic to send the registration data to the server
-    // using APIs or any other method.
+    try {
+      const response = await axios.get(`http://localhost:4000/User/check-email/${email}`);
 
-    console.log('Registration data:', {
-      email,
-      firstName,
-      lastName,
-      password,
-    });
+      if(response.data.exists) {
+        alert("Email already registered. Please use a different email.");
+      } else {
+        axios
+      .post("http://localhost:4000/User/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      .then(() => {
+        alert("User Added!!");
+      })
+      .catch((err) => console.log(err));
 
     // Reset the form after submission
-    setEmail('');
-    setFirstName('');
-    setLastName('');
-    setPassword('');
+    setEmail("");
+    setFirstName("");
+    setLastName("");
+    setPassword("");
+      }
+    
+    } catch (err) {
+      console.log(err);
+    }
+
+
+
+
+    
   };
 
   return (
     <div>
       <h2>Registration Form</h2>
       <form onSubmit={handleSubmit}>
-        
         <label>First Name:</label>
         <input
           type="text"
@@ -39,7 +57,7 @@ const Register = () => {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
-<br></br>
+        <br></br>
         <label>Last Name:</label>
         <input
           type="text"
@@ -47,16 +65,8 @@ const Register = () => {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
-<br></br>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-<br></br>
 
+        <br></br>
         <label>Email:</label>
         <input
           type="email"
@@ -64,9 +74,20 @@ const Register = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-<br></br>
+        <br></br>
+        <label>Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        <br></br>
         <button type="submit">Register</button>
-        <Link to="/"><button type="button">Cancel</button></Link>
+        <Link to="/">
+          <button type="button">Cancel</button>
+        </Link>
       </form>
     </div>
   );
