@@ -44,21 +44,26 @@ router.get('/check-email/:email', async (req, res) => {
 });
 
 //login routes ~ http://localhost:4000/User/login
-    router.route('/login').post((req,res) => {
-        const {email, password} = req.body;
+router.route('/login').post((req, res) => {
+  const { email, password } = req.body;
 
-        User.findOne({email: email})
-        .then(user => {
-          if(user) {
-            if(user.password === password) {
-              res.json("Success!!")
-            } else {
-              res.json("The password is incorrect!!")
-            }
+  User.findOne({ email: email })
+      .then(user => {
+          if (user) {
+              if (user.password === password) {
+                  res.json({ message: "Success" }); // Return a JSON response
+              } else {
+                  res.json({ error: "Incorrect" });
+              }
           } else {
-            res.json("No record existing!!")
+              res.json({ error: "No record existing!!" });
           }
-        })
-    })
+      })
+      .catch(error => {
+          console.error(error);
+          res.status(500).json({ error: "Internal Server Error" });
+      });
+});
+
 
 module.exports = router;
