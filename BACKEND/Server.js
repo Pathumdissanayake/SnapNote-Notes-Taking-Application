@@ -11,9 +11,13 @@ App.use(cors());
 App.use(bodyParser.json());
 
 const NotesRouter = require("./ROUTES/NotesRoute.js");
+const RegisterRouter = require ("./ROUTES/registerRoutes.js");
 
 //http://localhost:4000/Notes
 App.use("/Notes", NotesRouter);
+
+//http://localhost:4000/User
+App.use("/User", RegisterRouter);
 
 //connect to mongo db
 const URL = process.env.MONGODB_URL;
