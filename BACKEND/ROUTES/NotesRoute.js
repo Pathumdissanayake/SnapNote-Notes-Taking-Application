@@ -62,27 +62,6 @@ router.route("/edit/:id").put(async (req, res) => {
   }
 });
 
-// // update ~ http://localhost:4000/Notes/edit/id
-// router.route("/edit/:id").put(async (req, res) => {
-//   let NoteID = req.body.id; // Use req.params to get the ID from the URL
-
-//   const { title, content } = req.body;
-
-//   const editNote = {
-//     title,
-//     content,
-//   };
-
-//   //checking for an existing record
-//   const update = await Notes.findByIdAndUpdate(NoteID, editNote).then(() => {
-//     res.status(200).send({ status : "Note Edited!!"});
-//   })
-// .catch((err) => {
-//     console.log(err);
-//     res.status(500).send({ status : "Error in editing notes!!", error: err.message});
-// });
-// });
-
 //delete ~ http://localhost:4000/Notes/delete
 router.route("/delete/:id").delete(async (req, res) => {
   let NoteID = req.params.id;
