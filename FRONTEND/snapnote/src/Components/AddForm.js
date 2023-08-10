@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "../Styles/AddForm.css";
 
 export default function AddForm() {
   const [title, setTitle] = useState(""); // State for title input
@@ -42,9 +43,15 @@ export default function AddForm() {
 
   return (
     <div className="add-form-body">
+      <div className="add-form-box">
+        <div className="box-container">
+      <div className="add-note-heading">
       <h1>New Note</h1>
+      </div>
+      
       <form onSubmit={AddNewNote}>
         <input
+          id="title-input"
           type="text"
           placeholder="Title"
           name="title"
@@ -55,6 +62,7 @@ export default function AddForm() {
         <br />
 
         <textarea
+          className="text-area"
           placeholder="Start writing here"
           name="content"
           value={content} // Bind textarea value to state
@@ -67,6 +75,10 @@ export default function AddForm() {
         <br />
         <button type="button">+ Set Reminder</button>
       </form>
+      </div>
+
+      </div>
+
     </div>
   );
 }
