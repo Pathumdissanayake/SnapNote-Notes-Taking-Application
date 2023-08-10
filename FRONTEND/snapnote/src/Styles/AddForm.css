@@ -73,3 +73,37 @@ textarea {
         font-size: 18px;
     }
 }
+
+/* Responsive buttons */
+.btn-div {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.btns-in-add-form {
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #355e3b;
+    border: none;
+    border-radius: 10px;
+    margin-right: 20px; /* Add space between buttons */
+}
+
+.btns-in-add-form:hover {
+    background-color: #008080;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 767px) {
+    .btns-in-add-form {
+        margin-right: 0; /* Reset margin for smaller screens */
+        margin-bottom: 10px; /* Add vertical space between buttons */
+    }
+}
