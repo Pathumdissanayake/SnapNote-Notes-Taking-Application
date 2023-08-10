@@ -57,7 +57,7 @@ export default function HomePage() {
       <div className="div2">{/* eka note ekak click kalama methnt enn oni */}</div>
       <div className="add-new-btn-div">
         <Link to="/New-note" className="add-new-notes-btn">
-          <button>+</button>
+          <button className="add-new-btn">+</button>
         </Link>
       </div>
     </div>

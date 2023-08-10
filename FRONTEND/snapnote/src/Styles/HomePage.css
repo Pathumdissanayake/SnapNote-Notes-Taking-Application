@@ -1,8 +1,8 @@
 /* Button Styling */
 .add-new-notes-btn {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 240px;
+    right: 80px;
 }
 
 .app-name {
@@ -13,7 +13,21 @@
 
 .app-tagline {
     text-align: center;
-    font-family:'Poppins';
+    font-family: 'Poppins';
     font-style: italic;
     font-size: 20px;
+}
+
+.add-new-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #008080;
+    color: white;
+    border: none;
+    font-family: 'Poppins';
+    font-size: 30px; /* Adjust the font size as needed */
+    line-height: 50px; /* Vertically center the text */
+    text-align: center;
+    cursor: pointer; /* Change cursor on hover */
 }
