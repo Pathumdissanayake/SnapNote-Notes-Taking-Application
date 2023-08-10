@@ -18,7 +18,7 @@ const Login = () => {
         if (result.data.message === "Success") {
           navigate("/home");
           alert("Login Successfully!!");
-        } else if (result.data.error === "Incorrect") {
+        } else {
           alert("Register first!!");
         }
       });
