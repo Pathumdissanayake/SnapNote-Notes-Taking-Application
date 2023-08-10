@@ -44,6 +44,7 @@ export default function AddForm() {
   return (
     <div className="add-form-body">
       <div className="add-form-box">
+        <div className="padding-div">
         <div className="box-container">
       <div className="add-note-heading">
       <h1>New Note</h1>
@@ -63,7 +64,7 @@ export default function AddForm() {
 
         <textarea
           className="text-area"
-          placeholder="Start writing here"
+          placeholder="Start writing here..."
           name="content"
           value={content} // Bind textarea value to state
           onChange={(e) => setContent(e.target.value)} // Update state on change
@@ -76,7 +77,7 @@ export default function AddForm() {
         <button type="button">+ Set Reminder</button>
       </form>
       </div>
-
+      </div>
       </div>
 
     </div>
