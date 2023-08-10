@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../Styles/Register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -47,19 +48,26 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="reg-body">
+      <div className="div-for-reg-box">
+      <div className="reg">
+      <div className="reg-heading">
       <h2>Registration Form</h2>
+      </div>
+      <div className="reg-form-container">
       <form onSubmit={handleSubmit}>
-        <label>First Name:</label>
+        <label className="lable-reg">First Name:</label>
         <input
+        className="reg-input-field"
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
         <br></br>
-        <label>Last Name:</label>
+        <label className="lable-reg">Last Name:</label>
         <input
+        className="reg-input-field"
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
@@ -67,16 +75,18 @@ const Register = () => {
         />
 
         <br></br>
-        <label>Email:</label>
+        <label className="lable-reg">Email:</label>
         <input
+        className="reg-input-field"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
         <br></br>
-        <label>Password:</label>
+        <label className="lable-reg">Password:</label>
         <input
+        className="reg-input-field"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -84,11 +94,16 @@ const Register = () => {
         />
 
         <br></br>
-        <button type="submit">Register</button>
+        <div className="btns-div">
+        <button type="submit" className="reg-register">Register</button>
         <Link to="/">
-          <button type="button">Cancel</button>
+          <button type="button" className="reg-cancel">Cancel</button>
         </Link>
+        </div>
       </form>
+      </div>
+      </div>
+      </div>
     </div>
   );
 };
