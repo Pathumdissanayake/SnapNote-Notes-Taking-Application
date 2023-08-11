@@ -6,7 +6,7 @@ import "../Styles/HomePage.css";
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [editingNoteId, setEditingNoteId] = useState(null);
 
   useEffect(() => {
     async function getNotes() {
@@ -38,17 +38,17 @@ export default function HomePage() {
 
   const handleEdit = (noteId) => {
     setSelectedNote(notes.find((note) => note._id === noteId));
-    setIsEditing(true);
+    setEditingNoteId(noteId);
   };
 
   const handleEditCancel = () => {
-    setIsEditing(false);
+    setEditingNoteId(null);
   };
 
   const handleSave = async (updatedNote) => {
     try {
       await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
-      setIsEditing(false);
+      handleEditCancel();
       const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
       setNotes(updatedNotes.data);
     } catch (error) {
@@ -59,39 +59,35 @@ export default function HomePage() {
 
   return (
     <div className="home-body">
-      <div className="header-div">
-        <div className="header-section-1">
-          <h1 className="app-name">SNAPNOTE</h1>
-          <h2 className="app-tagline">Your Digital Note-Taking Companion</h2>
-        </div>
+      <div className="header-section-1">
+        <h1 className="app-name">SNAPNOTE</h1>
       </div>
 
       <div className="div-home-body">
-        <div className="div1">
-          <table className="table-display">
-            <tbody>
-              {notes.map((n, index) => (
-                <React.Fragment key={n.id}>
-                  <tr className="card" onClick={() => setSelectedNote(n)}>
+        <table className="table-display">
+          <tbody>
+            {notes.map((n, index) => (
+              <React.Fragment key={n.id}>
+                <tr className="card1" onClick={() => setSelectedNote(n)}>
+                  <div className="card1-container">
                     <td className="title-column">{n.title}</td>
+                  </div>
+                </tr>
+                {index < notes.length - 1 && (
+                  <tr key={index}>
+                    <td style={{ height: "5px" }}></td>
                   </tr>
-                  {index < notes.length - 1 && (
-                    <tr>
-                      <td style={{ height: "5px" }}></td>
-                    </tr>
-                  )}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="div2">
-          {selectedNote && (
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+        {selectedNote && (
+          <div className="div-for-paddding-card2">
             <div className="card2">
-              <div className="icon-and-title-div">
+              <div className="card-2-padding">
                 <div className="title-div">
-                  {!isEditing ? (
+                  {!editingNoteId || editingNoteId !== selectedNote._id ? (
                     <h3 className="title-column-display">{selectedNote.title}</h3>
                   ) : (
                     <input
@@ -107,12 +103,12 @@ export default function HomePage() {
                   )}
                 </div>
                 <div className="icon-div">
-                  {isEditing ? (
+                  {editingNoteId === selectedNote._id ? (
                     <>
                       <span className="icon save-icon" onClick={() => handleSave(selectedNote)}>
                         💾
                       </span>
-                      <span className="icon cancel-icon" onClick={handleEditCancel}>
+                      <span className="icon cancel-icon" onClick={() => handleEditCancel()}>
                         ❌
                       </span>
                     </>
@@ -127,24 +123,24 @@ export default function HomePage() {
                     </>
                   )}
                 </div>
+                {editingNoteId === selectedNote._id ? (
+                  <textarea
+                    className="content-textarea"
+                    value={selectedNote.content}
+                    onChange={(e) =>
+                      setSelectedNote((prevNote) => ({
+                        ...prevNote,
+                        content: e.target.value,
+                      }))
+                    }
+                  />
+                ) : (
+                  <p className="content-column">{selectedNote.content}</p>
+                )}
               </div>
-              {isEditing ? (
-                <textarea
-                  className="content-textarea"
-                  value={selectedNote.content}
-                  onChange={(e) =>
-                    setSelectedNote((prevNote) => ({
-                      ...prevNote,
-                      content: e.target.value,
-                    }))
-                  }
-                />
-              ) : (
-                <p className="content-column">{selectedNote.content}</p>
-              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <div className="add-new-btn-div">
