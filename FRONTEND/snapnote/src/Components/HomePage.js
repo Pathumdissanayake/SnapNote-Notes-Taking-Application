@@ -6,6 +6,7 @@ import "../Styles/HomePage.css";
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     async function getNotes() {
@@ -24,30 +25,36 @@ export default function HomePage() {
     if (!shouldDelete) {
       return;
     }
-  
+
     try {
-      const response = await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
-      if (response.status === 200) {
-        // Remove the deleted note from the local state
-        setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
-        setSelectedNote(null); // Clear the selected note
-  
-        // You can also refresh the notes from the backend to ensure consistency
-        const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
-        setNotes(updatedNotes.data);
-      } else {
-        console.log("Note not deleted:", response.data);
-      }
+      await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
+      setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+      setSelectedNote(null);
     } catch (error) {
       console.log("Error deleting note:", error);
       alert(`Error deleting note: ${error.message}`);
     }
   };
-  
-   
 
   const handleEdit = (noteId) => {
-    console.log(`Editing note with ID: ${noteId}`);
+    setSelectedNote(notes.find((note) => note._id === noteId));
+    setIsEditing(true);
+  };
+
+  const handleEditCancel = () => {
+    setIsEditing(false);
+  };
+
+  const handleSave = async (updatedNote) => {
+    try {
+      await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
+      setIsEditing(false);
+      const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
+      setNotes(updatedNotes.data);
+    } catch (error) {
+      console.log("Error updating note:", error);
+      alert(`Error updating note: ${error.message}`);
+    }
   };
 
   return (
@@ -84,26 +91,57 @@ export default function HomePage() {
             <div className="card2">
               <div className="icon-and-title-div">
                 <div className="title-div">
-                  <h3 className="title-column-display">{selectedNote.title}</h3>
+                  {!isEditing ? (
+                    <h3 className="title-column-display">{selectedNote.title}</h3>
+                  ) : (
+                    <input
+                      type="text"
+                      value={selectedNote.title}
+                      onChange={(e) =>
+                        setSelectedNote((prevNote) => ({
+                          ...prevNote,
+                          title: e.target.value,
+                        }))
+                      }
+                    />
+                  )}
                 </div>
-
                 <div className="icon-div">
-                  <span
-                    className="icon delete-icon"
-                    onClick={() => handleDelete(selectedNote._id)}
-                  >
-                    🗑️
-                  </span>
-
-                  <span
-                    className="icon edit-icon"
-                    onClick={() => handleEdit(selectedNote.id)}
-                  >
-                    ✏️
-                  </span>
+                  {isEditing ? (
+                    <>
+                      <span className="icon save-icon" onClick={() => handleSave(selectedNote)}>
+                        💾
+                      </span>
+                      <span className="icon cancel-icon" onClick={handleEditCancel}>
+                        ❌
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="icon delete-icon" onClick={() => handleDelete(selectedNote._id)}>
+                        🗑️
+                      </span>
+                      <span className="icon edit-icon" onClick={() => handleEdit(selectedNote._id)}>
+                        ✏️
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
-              <p className="content-column">{selectedNote.content}</p>
+              {isEditing ? (
+                <textarea
+                  className="content-textarea"
+                  value={selectedNote.content}
+                  onChange={(e) =>
+                    setSelectedNote((prevNote) => ({
+                      ...prevNote,
+                      content: e.target.value,
+                    }))
+                  }
+                />
+              ) : (
+                <p className="content-column">{selectedNote.content}</p>
+              )}
             </div>
           )}
         </div>
