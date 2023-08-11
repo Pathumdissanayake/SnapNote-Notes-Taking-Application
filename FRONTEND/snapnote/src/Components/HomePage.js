@@ -6,7 +6,7 @@ import "../Styles/HomePage.css";
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); // Add this state to control editing mode
 
   useEffect(() => {
     async function getNotes() {
@@ -27,9 +27,15 @@ export default function HomePage() {
     }
 
     try {
-      await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
-      setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
-      setSelectedNote(null);
+      const response = await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
+      if (response.status === 200) {
+        setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+        setSelectedNote(null);
+        const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
+        setNotes(updatedNotes.data);
+      } else {
+        console.log("Note not deleted:", response.data);
+      }
     } catch (error) {
       console.log("Error deleting note:", error);
       alert(`Error deleting note: ${error.message}`);
@@ -37,26 +43,33 @@ export default function HomePage() {
   };
 
   const handleEdit = (noteId) => {
-    setSelectedNote(notes.find((note) => note._id === noteId));
-    setIsEditing(true);
+    setSelectedNote(notes.find(note => note._id === noteId));
+    setIsEditing(true); // Set the editing state to true
   };
 
   const handleEditCancel = () => {
-    setIsEditing(false);
+    setIsEditing(false); // Set the editing state to false
   };
 
   const handleSave = async (updatedNote) => {
     try {
-      await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
-      setIsEditing(false);
-      const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
-      setNotes(updatedNotes.data);
+      const response = await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, {
+        title: updatedNote.title,
+        content: updatedNote.content
+      });
+
+      if (response.status === 200) {
+        setIsEditing(false); // Exit edit mode
+        const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
+        setNotes(updatedNotes.data);
+      } else {
+        console.log("Note not updated:", response.data);
+      }
     } catch (error) {
       console.log("Error updating note:", error);
       alert(`Error updating note: ${error.message}`);
     }
   };
-
   return (
     <div className="home-body">
       <div className="header-div">
@@ -98,14 +111,15 @@ export default function HomePage() {
                       type="text"
                       value={selectedNote.title}
                       onChange={(e) =>
-                        setSelectedNote((prevNote) => ({
+                        setSelectedNote(prevNote => ({
                           ...prevNote,
-                          title: e.target.value,
+                          title: e.target.value
                         }))
                       }
                     />
                   )}
                 </div>
+
                 <div className="icon-div">
                   {isEditing ? (
                     <>
@@ -128,20 +142,8 @@ export default function HomePage() {
                   )}
                 </div>
               </div>
-              {isEditing ? (
-                <textarea
-                  className="content-textarea"
-                  value={selectedNote.content}
-                  onChange={(e) =>
-                    setSelectedNote((prevNote) => ({
-                      ...prevNote,
-                      content: e.target.value,
-                    }))
-                  }
-                />
-              ) : (
-                <p className="content-column">{selectedNote.content}</p>
-              )}
+              <p className="content-column">{selectedNote.content}</p>
+              {/* Render the Update component here if needed */}
             </div>
           )}
         </div>
