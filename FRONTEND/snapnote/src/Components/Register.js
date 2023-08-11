@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../Styles/Register.css";
+import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -31,8 +33,10 @@ const Register = () => {
             password,
           })
           .then(() => {
-            alert("Registration Success!!");
-            navigate("/");
+            toast.success("Registration Success!!");
+            setTimeout(() => {
+              navigate("/");
+            }, 3000); 
           })
           .catch((err) => console.log(err));
 
@@ -104,6 +108,7 @@ const Register = () => {
       </div>
       </div>
       </div>
+      <ReactToastContainer />
     </div>
   );
 };
