@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Styles/Login.css";
+import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,18 +13,21 @@ const Login = () => {
 
   const handleLoginFormSubmit = (e) => {
     e.preventDefault();
-
+  
     axios
       .post("http://localhost:4000/User/login", { email, password })
       .then((result) => {
         if (result.data.message === "Success") {
-          navigate("/home");
-          alert("Login Successfully!!");
+          toast.success("Login Successfully!!");
+          setTimeout(() => {
+            navigate("/home");
+          }, 3000); // Adjust the time in milliseconds as needed (e.g., 3000ms = 3 seconds)
         } else {
-          alert("Register first!!");
+          toast.error("Register first!!");
         }
       });
   };
+  
 
   return (
     <div className="login-body">
@@ -66,6 +71,7 @@ const Login = () => {
       </div>
       </div>
       </div>
+      <ReactToastContainer />
     </div>
   );
 };
