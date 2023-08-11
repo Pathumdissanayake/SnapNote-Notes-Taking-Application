@@ -107,6 +107,7 @@ export default function HomePage() {
                 </div>
                 <div className="icon-div">
                   {editingNoteId === selectedNote._id ? (
+                    
                     <>
                       <span className="icon save-icon" onClick={() => handleSave(selectedNote)}>
                         💾
@@ -115,6 +116,7 @@ export default function HomePage() {
                         ❌
                       </span>
                     </>
+                    
                   ) : (
                     <>
                       <span className="icon delete-icon" onClick={() => handleDelete(selectedNote._id)}>
@@ -125,6 +127,7 @@ export default function HomePage() {
                       </span>
                     </>
                   )}
+
                 </div>
                 {editingNoteId === selectedNote._id ? (
                   <textarea
@@ -140,6 +143,7 @@ export default function HomePage() {
                 ) : (
                   <p className="content-column">{selectedNote.content}</p>
                 )}
+                
               </div>
             </div>
           </div>
