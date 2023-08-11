@@ -121,3 +121,17 @@ input[type="text"] {
   font-family: 'Poppins';
   font-size: 20px;
 }
+
+/* icon styling*/
+
+.icon-div .icon {
+  margin-right: 10px; /* Add some space between icons */
+  cursor: pointer;
+}
+
+.icon-div {
+  position: absolute;
+  top: 242px;
+  right: 80px;
+  display: flex;
+}
