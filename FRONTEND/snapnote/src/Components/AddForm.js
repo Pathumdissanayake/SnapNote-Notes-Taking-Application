@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../Styles/AddForm.css";
+import { useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function AddForm() {
-  const [title, setTitle] = useState(""); // State for title input
-  const [content, setContent] = useState(""); // State for content textarea
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [reminderDate, setReminderDate] = useState(null);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const navigate = useNavigate();
 
   const ValidateForm = () => {
     let isValid = true;
@@ -27,13 +33,14 @@ export default function AddForm() {
       const newNoteData = {
         title,
         content,
+        reminderDate, // Include the reminderDate in the data object
       };
 
       axios
         .post("http://localhost:4000/Notes/newNote", newNoteData)
         .then(() => {
           alert("New Note Created!");
-          window.location.reload();
+          navigate("/home");
         })
         .catch((err) => {
           alert(err);
@@ -41,51 +48,80 @@ export default function AddForm() {
     }
   };
 
+  const setReminder = () => {
+    console.log("setReminder called");
+    setShowDatePicker(true);
+  };
+
   return (
     <div className="add-form-body">
       <div className="add-form-box">
         <div className="padding-div">
-        <div className="box-container">
-      <div className="add-note-heading">
-      <h1>New Note</h1>
-      </div>
-      
-      <form onSubmit={AddNewNote}>
-        <input
-          id="title-input"
-          type="text"
-          placeholder="Title"
-          name="title"
-          value={title} // Bind input value to state
-          onChange={(e) => setTitle(e.target.value)} // Update state on change
-        />
+          <div className="box-container">
+            <div className="add-note-heading">
+              <h1>New Note</h1>
+            </div>
 
-        <br />
+            <form onSubmit={AddNewNote}>
+              <input
+                id="title-input"
+                type="text"
+                placeholder="Title"
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
 
-        <textarea
-          className="text-area"
-          placeholder="Start writing here..."
-          name="content"
-          value={content} // Bind textarea value to state
-          onChange={(e) => setContent(e.target.value)} // Update state on change
-        />
+              <br />
 
-        <br />
+              <textarea
+                className="text-area"
+                placeholder="Start writing here..."
+                name="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              />
 
-        <div className="btn-div">
-        
-        <button className="btns-in-add-form" type="submit">Create</button>
-        <Link to="/home"><button className="btns-in-add-form" type="button" link >Cancel</button></Link>
-        <br />
+              <br />
+
+              <div className="btn-div">
+                <button className="btns-in-add-form" type="submit">
+                  Create
+                </button>
+                <Link to="/home">
+                  <button className="btns-in-add-form" type="button" link>
+                    Cancel
+                  </button>
+                </Link>
+                <br />
+              </div>
+              <div className="btn-div">
+                <button
+                  className="btns-in-add-form"
+                  type="button"
+                  onClick={setReminder}
+                >
+                  + Set Reminder
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div className="btn-div">
-        <button className="btns-in-add-form" type="button">+ Set Reminder</button>
+      </div>
+      {showDatePicker && (
+        <div className="date-time-picker">
+          <DatePicker
+            selected={reminderDate}
+            onChange={(date) => setReminderDate(date)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            timeCaption="Time"
+            dateFormat="MMMM d, yyyy h:mm aa"
+            placeholderText="Select reminder date and time"
+          />
         </div>
-      </form>
-      </div>
-      </div>
-      </div>
-
+      )}
     </div>
   );
 }
