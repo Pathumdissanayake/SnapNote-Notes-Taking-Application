@@ -63,18 +63,18 @@ router.route("/edit/:id").put(async (req, res) => {
 });
 
 //delete ~ http://localhost:4000/Notes/delete
-router.route("/delete/:id").delete(async (req, res) => {
-  let NoteID = req.params.id;
-  await Notes.findByIdAndDelete(NoteID)
-    .then(() => {
-      res.status(200).send({ status: "Note Deleted" });
-    })
-    .catch((err) => {
-      console.log(err);
-      res
-        .status(500)
-        .send({ status: "Error with deleting note", error: err.message });
-    });
-});
+  router.route("/delete/:noteId").delete(async (req, res) => {
+    let NoteID = req.params.noteId;
+    await Notes.findByIdAndDelete(NoteID)
+      .then(() => {
+        res.status(200).send({ status: "Note Deleted" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res
+          .status(500)
+          .send({ status: "Error with deleting note", error: err.message });
+      });
+  });;
 
 module.exports = router;

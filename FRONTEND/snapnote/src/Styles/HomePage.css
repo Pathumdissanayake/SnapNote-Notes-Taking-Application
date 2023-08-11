@@ -3,31 +3,126 @@
     position: fixed;
     top: 240px;
     right: 80px;
-}
-
-.app-name {
+  }
+  
+  /* Typography */
+  .app-name {
     font-family: Lobster;
     text-align: center;
     font-size: 60px;
-}
-
-.app-tagline {
+  }
+  
+  .app-tagline {
     text-align: center;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-style: italic;
     font-size: 20px;
-}
-
-.add-new-btn {
+  }
+  
+  /* Add New Button */
+  .add-new-btn {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color: #008080;
     color: white;
     border: none;
-    font-family: 'Poppins';
+    font-family: "Poppins";
     font-size: 30px; /* Adjust the font size as needed */
     line-height: 50px; /* Vertically center the text */
     text-align: center;
     cursor: pointer; /* Change cursor on hover */
+  }
+  
+  /* Table Styling */
+  .table-display {
+    border-collapse: collapse;
+    width: 50%;
+  }
+  
+  /* Table Rows */
+  tr {
+    padding-left: 20px;
+    text-align: left;
+    height: 50px;
+  }
+  
+  /* Note Card */
+  .card, .card2 {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 70%;
+    padding: 20px;
+  }
+  
+  .card:hover, .card2 {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Layout Styling */
+  .div-home-body {
+    display: flex; /* Use flexbox to create a horizontal layout */
+    align-items: flex-start; /* Align items to the top of the container */
+  }
+  
+  .div1 {
+    flex: 50%; /* Set div1 to take up 50% of the available space */ 
+    box-sizing: border-box;
+    padding-left: 50px;
+  }
+  
+  .div2 {
+    flex: 50%; /* Set div2 to take up 50% of the available space */
+    box-sizing: border-box;
+    border-left: 1px solid #ccc; /* Add a separator between div1 and div2 */
+  }
+
+  .div1, .div2 {
+    font-family: 'Poppins';
+  }
+
+  .title-column-display {
+    font-size: 40px;
+  }
+
+  .content-column {
+    font-size: 25px;
+  }
+  
+  .title-column {
+    font-size: 20px;
+  }
+
+  .card2 {
+    height: 500px;
+  }
+
+  .icon {
+    font-size: 20px; /* Adjust the size as needed */
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .icon-and-title-div {
+    display: flex; /* Use flexbox for horizontal alignment */
+    align-items: center; /* Vertically center the items */
+  }
+  
+  .title-column-display {
+    flex: 1; /* Expand the title to fill available space */
+    margin: 0; /* Remove default margin */
+  }
+  
+  .icon-div {
+    display: flex; /* Use flexbox for horizontal alignment */
+  }
+  
+  .icon {
+    font-size: 20px; /* Adjust the size as needed */
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+.icon-div {
+    margin-right: 10px;
 }
