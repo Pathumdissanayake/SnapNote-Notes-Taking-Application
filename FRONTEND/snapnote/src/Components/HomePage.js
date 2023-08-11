@@ -14,7 +14,7 @@ export default function HomePage() {
         const response = await axios.get("http://localhost:4000/Notes/notes");
         setNotes(response.data);
       } catch (error) {
-        alert(error.message);
+        toast.error(error.message);
       }
     }
     getNotes();
