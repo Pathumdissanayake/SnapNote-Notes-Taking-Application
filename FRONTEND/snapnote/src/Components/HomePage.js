@@ -82,11 +82,14 @@ export default function HomePage() {
             ))}
           </tbody>
         </table>
+
         {selectedNote && (
           <div className="div-for-paddding-card2">
             <div className="card2">
+            
               <div className="card-2-padding">
                 <div className="title-div">
+
                   {!editingNoteId || editingNoteId !== selectedNote._id ? (
                     <h3 className="title-column-display">{selectedNote.title}</h3>
                   ) : (
