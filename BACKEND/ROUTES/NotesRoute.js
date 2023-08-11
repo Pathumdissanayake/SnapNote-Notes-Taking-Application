@@ -36,8 +36,8 @@ router.route("/notes").get((req, res) => {
 });
 
 // update ~ http://localhost:4000/Notes/edit/id
-router.route("/edit/:id").put(async (req, res) => {
-  let NoteID = req.params.id; // Use req.params to get the ID from the URL
+router.route("/edit/:noteId").put(async (req, res) => {
+  let NoteID = req.params.noteId; // Use req.params to get the ID from the URL
 
   const { title, content } = req.body;
 
@@ -48,9 +48,11 @@ router.route("/edit/:id").put(async (req, res) => {
 
   //checking for an existing record
   try {
-    const updatedNote = await Notes.findByIdAndUpdate(NoteID, editNote);
+    const updatedNote = await Notes.findByIdAndUpdate(NoteID, editNote, {
+      new: true, // This ensures that the updated document is returned
+    });
     if (updatedNote) {
-      res.status(200).json({ status: "Note Edited!!" });
+      res.status(200).json({ status: "Note Edited!!", note: updatedNote });
     } else {
       res.status(404).json({ error: "Note not found" });
     }
@@ -61,6 +63,7 @@ router.route("/edit/:id").put(async (req, res) => {
       .json({ status: "Error in editing notes!!", error: err.message });
   }
 });
+
 
 //delete ~ http://localhost:4000/Notes/delete
   router.route("/delete/:noteId").delete(async (req, res) => {
