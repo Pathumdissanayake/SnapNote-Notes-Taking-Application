@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../Styles/HomePage.css";
+import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
@@ -20,40 +22,41 @@ export default function HomePage() {
     getNotes();
   }, []);
 
-  const handleDelete = async (noteId) => {
-    const shouldDelete = window.confirm("Are you sure you want to delete this note?");
-    if (!shouldDelete) {
-      return;
-    }
+  const handleDelete = (noteId) => {
+    toast.info(
+      "Are you sure you want to delete this note?",
+      {
+        position: "top-center",
+        autoClose: false,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        closeButton: true,
+        onClose: () => {
+          performDelete(noteId);
+        },
+        render: ({ closeToast }) => (
+          <div>
+            <span>Are you sure you want to delete this note?</span>
+            <button onClick={() => { closeToast(); }}>Yes</button>
+            <button onClick={() => { closeToast(); }}>No</button>
+          </div>
+        ),
+      }
+    );
+  };
 
+  const performDelete = async (noteId) => {
     try {
       await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
       setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
       setSelectedNote(null);
+      toast.success("Note deleted successfully!");
     } catch (error) {
       console.log("Error deleting note:", error);
-      alert(`Error deleting note: ${error.message}`);
-    }
-  };
-
-  const handleEdit = (noteId) => {
-    setSelectedNote(notes.find((note) => note._id === noteId));
-    setEditingNoteId(noteId);
-  };
-
-  const handleEditCancel = () => {
-    setEditingNoteId(null);
-  };
-
-  const handleSave = async (updatedNote) => {
-    try {
-      await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
-      handleEditCancel();
-      const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
-      setNotes(updatedNotes.data);
-    } catch (error) {
-      console.log("Error updating note:", error);
-      alert(`Error updating note: ${error.message}`);
+      toast.error(`Error deleting note: ${error.message}`);
     }
   };
 
@@ -155,6 +158,7 @@ export default function HomePage() {
           <button className="add-new-btn">+</button>
         </Link>
       </div>
+      <ReactToastContainer />
     </div>
   );
 }
