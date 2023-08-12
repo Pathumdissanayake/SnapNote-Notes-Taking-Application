@@ -148,4 +148,10 @@ input[type="text"] {
   box-sizing: border-box; /* Include padding and border in the total width */
 }
 
+/*icons styling*/
+.icons {
+  height: 40px;
+  width: 40px;
+}
+
 

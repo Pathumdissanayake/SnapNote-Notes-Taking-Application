@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../Styles/HomePage.css";
-import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer as ReactToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import cancelimg from "../Images/cancel.png";
+import deleteimg from "../Images/delete.png";
+import editimg from "../Images/edit.png";
+import saveimg from "../Images/save.png";
 
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
@@ -24,7 +28,9 @@ export default function HomePage() {
   }, []);
 
   const handleDelete = async (noteId) => {
-    const shouldDelete = window.confirm("Are you sure you want to delete this note?");
+    const shouldDelete = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
     if (!shouldDelete) {
       return;
     }
@@ -51,7 +57,10 @@ export default function HomePage() {
 
   const handleSave = async (updatedNote) => {
     try {
-      await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
+      await axios.put(
+        `http://localhost:4000/Notes/edit/${updatedNote._id}`,
+        updatedNote
+      );
       handleEditCancel();
       const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
       setNotes(updatedNotes.data);
@@ -90,14 +99,14 @@ export default function HomePage() {
         {selectedNote && (
           <div className="div-for-paddding-card2">
             <div className="card2">
-            
               <div className="card-2-padding">
                 <div className="title-div">
-
                   {!editingNoteId || editingNoteId !== selectedNote._id ? (
                     <h3 className="title-column-display">
-                    {noteSelected ? "Select a note to view its content" : selectedNote.title}
-                  </h3>
+                      {noteSelected
+                        ? "Select a note to view its content"
+                        : selectedNote.title}
+                    </h3>
                   ) : (
                     <input
                       type="text"
@@ -113,27 +122,36 @@ export default function HomePage() {
                 </div>
                 <div className="icon-div">
                   {editingNoteId === selectedNote._id ? (
-                    
                     <>
-                      <span className="icon save-icon" onClick={() => handleSave(selectedNote)}>
-                        💾
+                      <span
+                        className="icon save-icon"
+                        onClick={() => handleSave(selectedNote)}
+                      >
+                        <img src={saveimg} className="icons" />
                       </span>
-                      <span className="icon cancel-icon" onClick={() => handleEditCancel()}>
-                        ❌
+                      <span
+                        className="icon cancel-icon"
+                        onClick={() => handleEditCancel()}
+                      >
+                        <img src={cancelimg} className="icons" />
                       </span>
                     </>
-                    
                   ) : (
                     <>
-                      <span className="icon delete-icon" onClick={() => handleDelete(selectedNote._id)}>
-                        🗑️
+                      <span
+                        className="icon edit-icon"
+                        onClick={() => handleEdit(selectedNote._id)}
+                      >
+                        <img src={editimg} className="icons" />
                       </span>
-                      <span className="icon edit-icon" onClick={() => handleEdit(selectedNote._id)}>
-                        ✏️
+                      <span
+                        className="icon delete-icon"
+                        onClick={() => handleDelete(selectedNote._id)}
+                      >
+                        <img src={deleteimg} className="icons" />
                       </span>
                     </>
                   )}
-
                 </div>
                 {editingNoteId === selectedNote._id ? (
                   <textarea
@@ -149,7 +167,6 @@ export default function HomePage() {
                 ) : (
                   <p className="content-column">{selectedNote.content}</p>
                 )}
-                
               </div>
             </div>
           </div>
