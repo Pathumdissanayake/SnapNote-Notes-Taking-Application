@@ -3,8 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../Styles/AddForm.css";
 import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddForm() {
   const [title, setTitle] = useState("");
@@ -18,10 +18,10 @@ export default function AddForm() {
 
     if (!title) {
       isValid = false;
-      alert("Enter the title for your note!");
+      toast.error("Enter the title for your note!");
     } else if (!content) {
       isValid = false;
-      alert("Enter Content to create a note!!");
+      toast.error("Enter Content to create a note!!");
     }
     return isValid;
   };
@@ -39,18 +39,15 @@ export default function AddForm() {
       axios
         .post("http://localhost:4000/Notes/newNote", newNoteData)
         .then(() => {
-          alert("New Note Created!");
-          navigate("/home");
+          toast.success("New Note Created!");
+          setTimeout(() => {
+            navigate("/home");
+          }, 3000); 
         })
         .catch((err) => {
-          alert(err);
+          toast.error("An Error Occured : ", err);
         });
     }
-  };
-
-  const setReminder = () => {
-    console.log("setReminder called");
-    setShowDatePicker(true);
   };
 
   return (
@@ -95,33 +92,11 @@ export default function AddForm() {
                 </Link>
                 <br />
               </div>
-              <div className="btn-div">
-                <button
-                  className="btns-in-add-form"
-                  type="button"
-                  onClick={setReminder}
-                >
-                  + Set Reminder
-                </button>
-              </div>
             </form>
           </div>
         </div>
       </div>
-      {showDatePicker && (
-        <div className="date-time-picker">
-          <DatePicker
-            selected={reminderDate}
-            onChange={(date) => setReminderDate(date)}
-            showTimeSelect
-            timeFormat="HH:mm"
-            timeIntervals={15}
-            timeCaption="Time"
-            dateFormat="MMMM d, yyyy h:mm aa"
-            placeholderText="Select reminder date and time"
-          />
-        </div>
-      )}
+      <ReactToastContainer />
     </div>
   );
 }
