@@ -9,6 +9,7 @@ export default function HomePage() {
   const [notes, setNotes] = useState([]);
   const [selectedNote, setSelectedNote] = useState(null);
   const [editingNoteId, setEditingNoteId] = useState(null);
+  const [noteSelected, setNoteSelected] = useState(false);
 
   useEffect(() => {
     async function getNotes() {
@@ -22,41 +23,41 @@ export default function HomePage() {
     getNotes();
   }, []);
 
-  const handleDelete = (noteId) => {
-    toast.info(
-      "Are you sure you want to delete this note?",
-      {
-        position: "top-center",
-        autoClose: false,
-        hideProgressBar: true,
-        closeOnClick: false,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        closeButton: true,
-        onClose: () => {
-          performDelete(noteId);
-        },
-        render: ({ closeToast }) => (
-          <div>
-            <span>Are you sure you want to delete this note?</span>
-            <button onClick={() => { closeToast(); }}>Yes</button>
-            <button onClick={() => { closeToast(); }}>No</button>
-          </div>
-        ),
-      }
-    );
-  };
+  const handleDelete = async (noteId) => {
+    const shouldDelete = window.confirm("Are you sure you want to delete this note?");
+    if (!shouldDelete) {
+      return;
+    }
 
-  const performDelete = async (noteId) => {
     try {
       await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
       setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
       setSelectedNote(null);
-      toast.success("Note deleted successfully!");
     } catch (error) {
       console.log("Error deleting note:", error);
       toast.error(`Error deleting note: ${error.message}`);
+    }
+  };
+
+  const handleEdit = (noteId) => {
+    setSelectedNote(notes.find((note) => note._id === noteId));
+    setEditingNoteId(noteId);
+    setNoteSelected(true);
+  };
+
+  const handleEditCancel = () => {
+    setEditingNoteId(null);
+  };
+
+  const handleSave = async (updatedNote) => {
+    try {
+      await axios.put(`http://localhost:4000/Notes/edit/${updatedNote._id}`, updatedNote);
+      handleEditCancel();
+      const updatedNotes = await axios.get("http://localhost:4000/Notes/notes");
+      setNotes(updatedNotes.data);
+    } catch (error) {
+      console.log("Error updating note:", error);
+      toast.error(`Error updating note: ${error.message}`);
     }
   };
 
@@ -94,7 +95,9 @@ export default function HomePage() {
                 <div className="title-div">
 
                   {!editingNoteId || editingNoteId !== selectedNote._id ? (
-                    <h3 className="title-column-display">{selectedNote.title}</h3>
+                    <h3 className="title-column-display">
+                    {noteSelected ? "Select a note to view its content" : selectedNote.title}
+                  </h3>
                   ) : (
                     <input
                       type="text"
