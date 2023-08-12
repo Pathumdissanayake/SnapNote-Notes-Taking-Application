@@ -1,7 +1,8 @@
 # SnapNote-Notes-Taking-Application
 SnapNote is a MERN (MongoDB, Express, React, Node.js) stack web application for managing notes.
 
-Setup Instructions
+## Setup Instructions
+
 Follow these steps to set up and run the SnapNote application on your local machine:
 
 Step 1: Download and Extract Repository
@@ -52,7 +53,3 @@ Please follow these steps:
 2. After opening the file, simply press `Ctrl + S` (or `Cmd + S` on macOS) to save it.
 
 This should resolve the conflicting plugin issue.
-
-## Setup Instructions
-
-Follow these steps to set up and run the SnapNote application on your local machine:
