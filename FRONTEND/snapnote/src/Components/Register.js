@@ -23,7 +23,7 @@ const Register = () => {
       );
 
       if (response.data.exists) {
-        alert("Email already registered. Please use a different email.");
+        toast.error("Email already registered. Please use a different email.");
       } else {
         axios
           .post("http://localhost:4000/User/register", {
