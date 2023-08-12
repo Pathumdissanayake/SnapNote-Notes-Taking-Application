@@ -147,3 +147,5 @@ input[type="text"] {
   max-width: 800px; /* Set a maximum width to prevent excessive expansion */
   box-sizing: border-box; /* Include padding and border in the total width */
 }
+
+
