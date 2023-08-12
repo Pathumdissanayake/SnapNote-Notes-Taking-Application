@@ -27,14 +27,30 @@ export default function HomePage() {
     getNotes();
   }, []);
 
-  const handleDelete = async (noteId) => {
-    const shouldDelete = window.confirm(
-      "Are you sure you want to delete this note?"
+  const showDeleteConfirmation = (noteId) => {
+    // Custom confirmation toast for delete
+    toast.info(
+      <div>
+        <p className="delete-confiramation-box-text">
+          Are you sure you want to delete this note?
+        </p>
+        <button className="confirm-btns" onClick={() => handleDelete(noteId)}>
+          Yes
+        </button>
+        <button className="confirm-btns" onClick={toast.dismiss}>
+          No
+        </button>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+      }
     );
-    if (!shouldDelete) {
-      return;
-    }
+  };
 
+  const handleDelete = async (noteId) => {
     try {
       await axios.delete(`http://localhost:4000/Notes/delete/${noteId}`);
       setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
@@ -146,7 +162,7 @@ export default function HomePage() {
                       </span>
                       <span
                         className="icon delete-icon"
-                        onClick={() => handleDelete(selectedNote._id)}
+                        onClick={() => showDeleteConfirmation(selectedNote._id)}
                       >
                         <img src={deleteimg} className="icons" />
                       </span>

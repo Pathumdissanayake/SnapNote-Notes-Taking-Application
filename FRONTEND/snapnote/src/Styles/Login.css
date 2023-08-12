@@ -1,115 +1,123 @@
 /* Base styling */
-.login-body, .login-btn, .register-btn {
-    font-family: 'Poppins';
+.login-body,
+.login-btn,
+.register-btn {
+  font-family: "Poppins";
 }
 
 /* Common input styling */
-input[type=email], input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 /* Responsive typography */
 .login-heading-div {
-    text-align: center;
-    font-size: 30px;
+  text-align: center;
+  font-size: 30px;
 }
 
 .login-input-field {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 /* Main login box */
 .login {
-    margin: 20px;
-    padding-bottom: 50px;
-    border-radius: 50px;
-    background-color: #f0e130;
+  margin: 20px;
+  padding-bottom: 50px;
+  border-radius: 50px;
+  background-color: #f0e130;
 }
 
 /* Form container */
 .login-form-container-div {
-    margin-left: 20px;
-    margin-right: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /* Vertically center login box */
 .div-for-login-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .lable-login {
-    font-size: 24px;
+  font-size: 24px;
 }
 
 /* Responsive buttons */
-.login-btn, .register-btn {
-    display: inline-block;
-    padding: 8px 15px;
-    font-size: 18px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color: #fff;
-    background-color: #355e3b;
-    border: none;
-    border-radius: 10px;
+.login-btn,
+.register-btn {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #355e3b;
+  border: none;
+  border-radius: 10px;
 }
 
-.login-btn:hover, .register-btn:hover {
-    background-color: #008080;
+.login-btn:hover,
+.register-btn:hover {
+  background-color: #008080;
 }
 
 /* Flexbox for centering buttons */
 .btns-div {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* Media Queries for Responsiveness */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .login-heading-div {
-        font-size: 40px; /* Increase font size for tablet-sized screens */
-    }
+  .login-heading-div {
+    font-size: 40px; /* Increase font size for tablet-sized screens */
+  }
 
-    .login-form-container-div {
-        margin-left: 120px; /* Adjust margin for tablet-sized screens */
-        margin-right: 120px; /* Adjust margin for tablet-sized screens */
-    }
+  .login-form-container-div {
+    margin-left: 120px; /* Adjust margin for tablet-sized screens */
+    margin-right: 120px; /* Adjust margin for tablet-sized screens */
+  }
 
-    .login-btn, .register-btn {
-        padding: 10px 20px; /* Reset padding for tablets */
-        font-size: 20px; /* Reset font size for tablets */
-        margin-right: 30px; /* Adjust space between buttons for tablets */
-    }
+  .login-btn,
+  .register-btn {
+    padding: 10px 20px; /* Reset padding for tablets */
+    font-size: 20px; /* Reset font size for tablets */
+    margin-right: 30px; /* Adjust space between buttons for tablets */
+  }
 }
 
 @media (min-width: 1024px) {
-    .login-form-container-div {
-        margin-left: 220px; /* Adjust margin for larger screens */
-        margin-right: 220px; /* Adjust margin for larger screens */
-    }
+  .login-form-container-div {
+    margin-left: 220px; /* Adjust margin for larger screens */
+    margin-right: 220px; /* Adjust margin for larger screens */
+  }
 
-    .login-btn, .register-btn {
-        padding: 10px 20px; /* Reset padding for larger screens */
-        font-size: 22px; /* Reset font size for larger screens */
-        margin-right: 50px; /* Adjust space between buttons for desktops */
-    }
+  .login-btn,
+  .register-btn {
+    padding: 10px 20px; /* Reset padding for larger screens */
+    font-size: 22px; /* Reset font size for larger screens */
+    margin-right: 50px; /* Adjust space between buttons for desktops */
+  }
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 767px) {
-    .login-btn, .register-btn {
-        margin-right: 0; /* Reset margin for smaller screens */
-        margin-bottom: 10px; /* Add vertical space between buttons */
-    }
+  .login-btn,
+  .register-btn {
+    margin-right: 0; /* Reset margin for smaller screens */
+    margin-bottom: 10px; /* Add vertical space between buttons */
+  }
 }

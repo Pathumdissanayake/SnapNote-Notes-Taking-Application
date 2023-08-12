@@ -15,7 +15,7 @@
 
 /* Body styling */
 .home-body {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   padding-left: 60px;
 }
 
@@ -80,7 +80,6 @@
   padding: 20px 60px; /* Adjust the padding as needed */
 }
 
-
 /* Column styling */
 .title-column {
   font-size: 22px;
@@ -99,7 +98,7 @@
 .content-textarea {
   height: 600px;
   font-size: 20px;
-  font-family: 'Poppins';
+  font-family: "Poppins";
 }
 
 /* Media Queries for Responsiveness */
@@ -119,7 +118,7 @@
 }
 
 input[type="text"] {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-size: 20px;
 }
 
@@ -154,4 +153,23 @@ input[type="text"] {
   width: 40px;
 }
 
+/*confirmation box buttons */
+.confirm-btns {
+  font-family: "Poppins";
+  font-size: 18px;
+  margin-left: 40px;
+  border-color: #008080;
+  color: white;
+  border-radius: 10px;
+  background-color: #355e3b;
+}
 
+.confirm-btns:hover {
+  background-color: #008080;
+}
+
+.delete-confiramation-box-text {
+  font-family: "Poppins";
+  font-size: 15px;
+  color: black;
+}

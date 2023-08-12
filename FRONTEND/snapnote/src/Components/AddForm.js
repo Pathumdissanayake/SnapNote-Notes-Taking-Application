@@ -3,8 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../Styles/AddForm.css";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer as ReactToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer as ReactToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AddForm() {
   const [title, setTitle] = useState("");
@@ -42,7 +42,7 @@ export default function AddForm() {
           toast.success("New Note Created!");
           setTimeout(() => {
             navigate("/home");
-          }, 3000); 
+          }, 3000);
         })
         .catch((err) => {
           toast.error("An Error Occured : ", err);
